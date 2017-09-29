@@ -93,3 +93,16 @@ alternative hypothesis: true difference in means is not equal to 0
 sample estimates:
 mean of the differences 
                    0.21 
+vector2<-read.spss("p192.sav")
+ t.test(vector2$weight,mu=3.26)    单样本t检验
+
+        One Sample t-test
+
+data:  vector2$weight
+t = 1.3301, df = 19, p-value = 0.1992
+alternative hypothesis: true mean is not equal to 3.26
+95 percent confidence interval:
+ 3.202638 3.517362
+sample estimates:
+mean of x 
+     3.36 
