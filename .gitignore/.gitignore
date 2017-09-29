@@ -1,0 +1,95 @@
+install.packages("car")        
+library(car)         方差齐性
+install.packages("foreign")
+library(foreign)    导入数据
+vector1<-read.spss("p193.sav")
+$GROUP
+\\ [1] 患者   患者   患者   患者   患者   患者   患者   患者   患者   患者  
+[11] 患者   患者   患者   正常人 正常人 正常人 正常人 正常人 正常人 正常人
+[21] 正常人 正常人 正常人 正常人 正常人
+Levels: 患者 正常人
+
+$X
+ [1] 2.34 2.47 2.22 2.31 2.36 2.38 2.15 2.57 2.19 2.25 2.28 2.31 2.42 2.61
+[15] 2.71 2.73 2.64 2.68 2.81 2.76 2.55 2.91 2.85 2.71 2.64
+
+attr(,"label.table")
+attr(,"label.table")$GROUP
+正常人   患者 
+     2      1 
+
+attr(,"label.table")$X
+NULL
+
+attr(,"variable.labels")
+         GROUP              X 
+        "分组" "血清转铁蛋白" 
+        \\
+ attach(vector1)
+ group<-as.factor(GROUP)
+  leveneTest(y=X,group=group)     方差齐性检验
+Levene's Test for Homogeneity of Variance (center = median)
+      Df F value Pr(>F)
+group  1  0.1128   0.74
+      23 
+install.packages("MASS")   t检验
+ library(MASS)
+ t.test(X[1:13],X[14:25],var.equal=TRUE)   两个互相独立样本t检验
+cc<-data.frame(cbind(GROUP,X))
+cc
+   GROUP    X
+1      1 2.34
+2      1 2.47
+3      1 2.22
+4      1 2.31
+5      1 2.36
+6      1 2.38
+7      1 2.15
+8      1 2.57
+9      1 2.19
+10     1 2.25
+11     1 2.28
+12     1 2.31
+13     1 2.42
+14     2 2.61
+15     2 2.71
+16     2 2.73
+17     2 2.64
+18     2 2.68
+19     2 2.81
+20     2 2.76
+21     2 2.55
+22     2 2.91
+23     2 2.85
+24     2 2.71
+25     2 2.64
+detach(vector1)
+attach(cc)
+cc[GROUP==1,]   筛选
+   GROUP    X
+1      1 2.34
+2      1 2.47
+3      1 2.22
+4      1 2.31
+5      1 2.36
+6      1 2.38
+7      1 2.15
+8      1 2.57
+9      1 2.19
+10     1 2.25
+11     1 2.28
+12     1 2.31
+13     1 2.42
+vector2<-read.spss("p196.sav")
+ t.test(vector2$X1,vector2$X2,paired=TRUE)   独立样本t检验
+ 
+        Paired t-test
+
+data:  vector2$X1 and vector2$X2
+t = 1.5171, df = 9, p-value = 0.1635
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.103127  0.523127
+sample estimates:
+mean of the differences 
+                   0.21 
