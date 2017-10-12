@@ -106,3 +106,54 @@ alternative hypothesis: true mean is not equal to 3.26
 sample estimates:
 mean of x 
      3.36 
+
+//单因素方差检验
+> sav<-read.spss("1.sav")
+> attach(sav)
+The following object is masked _by_ .GlobalEnv:
+
+    group
+
+The following objects are masked from sav (pos = 3):
+
+    group, mark
+
+> sav
+$group
+ [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+[37] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
+
+$mark
+ [1] 72 51 57 53 74 52 59 55 57 65 46 57 46 62 50 56 54 57 50 54 57 48 41 34
+[25] 54 38 49 58 40 51 44 52 42 55 44 48 62 37 46 59 35 70 56 45 50 52 52 57
+[49] 38 40 42
+
+attr(,"label.table")
+attr(,"label.table")$group
+NULL
+
+attr(,"label.table")$mark
+NULL
+
+attr(,"codepage")
+[1] 65001
+> group<-factor(group)            //factor 很关键
+> lamp<-aov(mark~group)
+> summary(lamp)
+            Df Sum Sq Mean Sq F value  Pr(>F)   
+group        2    796   398.0   5.806 0.00552 **      组间   组间变异  MS   F
+Residuals   48   3290    68.6                         组内   组内变异  MS      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+//TukeyHSD法  多组间比较，降低错误概率
+> TukeyHSD(lamp)
+  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = mark ~ group)
+
+$group
+         diff        lwr        upr     p adj
+2-1 -8.885449 -15.570445 -2.2004524 0.0064950
+3-1 -7.073684 -13.989895 -0.1574734 0.0439841
+3-2  1.811765  -5.281662  8.9051915 0.8111652
